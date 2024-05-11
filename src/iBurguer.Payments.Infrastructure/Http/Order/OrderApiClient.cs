@@ -32,9 +32,9 @@ public class OrderApiClient : IOrderGateway
 
             return true;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            _logger.LogError(e.Message, e.InnerException);
+            _logger.LogError("An error occurred while trying to confirm an order.", ex);
 
             throw;
         }
@@ -52,9 +52,9 @@ public class OrderApiClient : IOrderGateway
 
             return true;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            _logger.LogError(e.Message, e.InnerException);
+            _logger.LogError("An error occurred while trying to cancel an order.", ex);
 
             throw;
         }
