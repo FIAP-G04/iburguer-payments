@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iBurguer.Payments.Core", "src\iBurguer.Payments.Core\iBurguer.Payments.Core.csproj", "{4E607C3A-36E1-4A4E-9B05-C37EB66A4CDA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4150F08A-85C3-4109-B5F3-8E4711949E74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iBurguer.Payments.API", "src\iBurguer.Payments.API\iBurguer.Payments.API.csproj", "{3A3E2F0C-730B-4CC7-A35E-BBB8D5CC0483}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iBurguer.Payments.Infrastructure", "src\iBurguer.Payments.Infrastructure\iBurguer.Payments.Infrastructure.csproj", "{AB940030-370E-4F4D-A76E-AFC9BE297CB4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{F7BF0E65-87F8-4360-80CB-C5B7EF7830F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iBurguer.Payments.UnitTests", "test\iBurguer.Payments.UnitTests\iBurguer.Payments.UnitTests.csproj", "{650A5D05-9842-432C-A85F-83F302A5AD59}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4E607C3A-36E1-4A4E-9B05-C37EB66A4CDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E607C3A-36E1-4A4E-9B05-C37EB66A4CDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E607C3A-36E1-4A4E-9B05-C37EB66A4CDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E607C3A-36E1-4A4E-9B05-C37EB66A4CDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A3E2F0C-730B-4CC7-A35E-BBB8D5CC0483}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A3E2F0C-730B-4CC7-A35E-BBB8D5CC0483}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A3E2F0C-730B-4CC7-A35E-BBB8D5CC0483}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A3E2F0C-730B-4CC7-A35E-BBB8D5CC0483}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB940030-370E-4F4D-A76E-AFC9BE297CB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB940030-370E-4F4D-A76E-AFC9BE297CB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB940030-370E-4F4D-A76E-AFC9BE297CB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB940030-370E-4F4D-A76E-AFC9BE297CB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{650A5D05-9842-432C-A85F-83F302A5AD59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{650A5D05-9842-432C-A85F-83F302A5AD59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{650A5D05-9842-432C-A85F-83F302A5AD59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{650A5D05-9842-432C-A85F-83F302A5AD59}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4E607C3A-36E1-4A4E-9B05-C37EB66A4CDA} = {4150F08A-85C3-4109-B5F3-8E4711949E74}
+		{3A3E2F0C-730B-4CC7-A35E-BBB8D5CC0483} = {4150F08A-85C3-4109-B5F3-8E4711949E74}
+		{AB940030-370E-4F4D-A76E-AFC9BE297CB4} = {4150F08A-85C3-4109-B5F3-8E4711949E74}
+		{650A5D05-9842-432C-A85F-83F302A5AD59} = {F7BF0E65-87F8-4360-80CB-C5B7EF7830F9}
+	EndGlobalSection
+EndGlobal
