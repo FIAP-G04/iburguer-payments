@@ -21,7 +21,7 @@ public abstract class Entity<TId> : IEntity
         events.Add(domainEvent);
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (!(obj is Entity<TId> other)) return false;
 
@@ -29,12 +29,10 @@ public abstract class Entity<TId> : IEntity
 
         if (GetType() != other.GetType()) return false;
 
-        if (Id.Equals(default) || other.Id.Equals(default)) return false;
-
         return Id.Equals(other.Id);
     }
 
-    public static bool operator ==(Entity<TId> first, Entity<TId> second)
+    public static bool operator ==(Entity<TId>? first, Entity<TId>? second)
     {
         if (first is null && second is null) return true;
 

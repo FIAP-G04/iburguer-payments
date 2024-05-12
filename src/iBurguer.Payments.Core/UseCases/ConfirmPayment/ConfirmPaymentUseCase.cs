@@ -29,7 +29,7 @@ public class ConfirmPaymentUseCase : IConfirmPaymentUseCase
 
         PaymentNotFound.ThrowIfNull(payment);
 
-        payment.Confirm();
+        payment!.Confirm();
 
         var processed = await _repository.Update(payment, cancellationToken);
         

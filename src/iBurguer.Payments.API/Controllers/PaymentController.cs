@@ -18,6 +18,7 @@ public class PaymentController : ControllerBase
     /// <remarks>Registers a new payment in the system.</remarks>
     /// <param name="useCase">The use case responsible for registering the payment.</param>
     /// <param name="request">The request containing information about the payment to be registered.</param>
+    /// <param name="cancellationToken">Cancellation token (optional).</param>
     /// <response code="201">Payment created successfully.</response>
     /// <response code="422">Invalid request. Missing or invalid parameters.</response>
     /// <response code="500">Internal server error. Something went wrong on the server side.</response>
@@ -37,6 +38,7 @@ public class PaymentController : ControllerBase
     /// <remarks>Marks an existing payment as confirmed in the system.</remarks>
     /// <param name="useCase">The use case responsible for confirming the payment.</param>
     /// <param name="id">The ID of the payment to be confirmed.</param>
+    /// <param name="cancellationToken">Cancellation token (optional).</param>
     /// <response code="200">Payment confirmed successfully.</response>
     /// <response code="404">Payment not found.</response>
     /// <response code="500">Internal server error. Something went wrong on the server side.</response>
@@ -56,6 +58,7 @@ public class PaymentController : ControllerBase
     /// <remarks>Marks an existing payment as refused in the system.</remarks>
     /// <param name="useCase">The use case responsible for refusing the payment.</param>
     /// <param name="id">The ID of the payment to be refused.</param>
+    /// <param name="cancellationToken">Cancellation token (optional).</param>
     /// <response code="200">Payment completed successfully.</response>
     /// <response code="404">Payment not found.</response>
     /// <response code="500">Internal server error. Something went wrong on the server side.</response>

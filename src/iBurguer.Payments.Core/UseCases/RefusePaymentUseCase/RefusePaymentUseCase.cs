@@ -25,7 +25,7 @@ public class RefusePaymentUseCase : IRefusePaymentUseCase
 
         PaymentNotFound.ThrowIfNull(payment);
 
-        payment.Refuse();
+        payment!.Refuse();
 
         var refused = await _repository.Update(payment, cancellationToken);
         

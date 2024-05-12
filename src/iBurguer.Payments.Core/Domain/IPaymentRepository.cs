@@ -7,6 +7,4 @@ public interface IPaymentRepository
     Task<bool> Update(Payment payment, CancellationToken cancellationToken);
 
     Task<Payment?> GetById(Guid paymentId, CancellationToken cancellationToken);
-
-    Task<bool> IsPaymentForOrder(Guid orderId, CancellationToken cancellationToken);
 }
