@@ -6,7 +6,7 @@ public record PaymentRefusedResponse
 {
     public Guid OrderId { get; set; }
     public Guid PaymentId { get; set; }
-    public string PaymentStatus { get; set; }
+    public string PaymentStatus { get; set; } = string.Empty;
     public DateTime RefusedAt { get; set; }
 
     public static PaymentRefusedResponse Convert(Payment payment)

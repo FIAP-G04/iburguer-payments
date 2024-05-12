@@ -6,7 +6,7 @@ public record PaymentConfirmedResponse
 {
     public Guid OrderId { get; set; }
     public Guid PaymentId { get; set; }
-    public string PaymentStatus { get; set; }
+    public string PaymentStatus { get; set; } = string.Empty;
     public DateTime PayedAt { get; set; }
 
     public static PaymentConfirmedResponse Convert(Payment payment)

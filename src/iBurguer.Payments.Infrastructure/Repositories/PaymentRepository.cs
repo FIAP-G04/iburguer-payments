@@ -36,7 +36,7 @@ public class PaymentRepository : IPaymentRepository
 
             try
             {
-                await _collection.UpdateOneAsync(session, i => i.Id == payment.Id, update, null);
+                await _collection.UpdateOneAsync(session, i => i.Id == payment.Id, update, null, cancellationToken);
                 
                 foreach (var @event in payment.Events)
                 {
@@ -47,7 +47,7 @@ public class PaymentRepository : IPaymentRepository
 
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 await _context.Rollback(session);
                 
@@ -59,10 +59,5 @@ public class PaymentRepository : IPaymentRepository
     public async Task<Payment?> GetById(Guid paymentId, CancellationToken cancellationToken)
     {
         return await _collection.Find(i => i.Id == paymentId).FirstOrDefaultAsync(cancellationToken);
-    }
-
-    public async Task<bool> IsPaymentForOrder(Guid orderId, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
     }
 }
