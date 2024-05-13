@@ -8,6 +8,8 @@
 .idea/
 src/iBurguer.Payments.API/appsettings.Development.json
 
+.vs
+
 # Build results
 
 [Dd]ebug/

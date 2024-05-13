@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "FIAP.Diner.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "FIAP.Diner.labels" . | nindent 4 }}
+data:
+  MongoDb__ConnectionString: mongodb+srv://{{ .Values.configmap.mongodb.user }}:{{ .Values.configmap.mongodb.password }}@{{ .Values.configmap.mongodb.cluster }}?retryWrites=true&w=majority&appName={{ .Values.configmap.mongodb.appName }}
+  MongoDb__Database: {{ .Values.configmap.mongodb.database }}
+  OrderApi__Url: {{ .Values.configmap.orderApiUrl }}

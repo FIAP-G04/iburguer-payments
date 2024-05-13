@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "FIAP.Diner.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "FIAP.Diner.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      {{- include "FIAP.Diner.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "FIAP.Diner.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.image.repository }}{{ if .Values.image.tag }}:{{ .Values.image.tag | default .Chart.AppVersion }}{{ end}}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: MongoDb__ConnectionString
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "FIAP.Diner.fullname" . }}
+                  key: MongoDb__ConnectionString
+            - name: MongoDb__Database
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "FIAP.Diner.fullname" . }}
+                  key: MongoDb__Database
+            - name: OrderApi__Url
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "FIAP.Diner.fullname" . }}
+                  key: OrderApi__Url
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
