@@ -1,0 +1,60 @@
+# Default values for FIAP.Diner.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  repository: matheusaoc/iburguer-payments #cdvt/iburguer-ordering
+  pullPolicy: Always
+  tag: "latest"
+
+nameOverride: ""
+fullnameOverride: ""
+namespace: iburguer
+
+podLabels: {}
+
+replicas: 1
+
+service:
+  type: LoadBalancer
+  port: 8083
+  targetPort: 8080
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 800Mi
+  requests:
+    cpu: 100m
+    memory: 256Mi
+
+livenessProbe:
+  httpGet:
+    path: /hc
+    port: 8080
+  initialDelaySeconds: 5
+  periodSeconds: 5
+readinessProbe:
+  httpGet:
+    path: /hc
+    port: 8080
+  initialDelaySeconds: 5
+  periodSeconds: 5
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 4
+  targetCPUUtilizationPercentage: 80
+  #targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+configmap:
+  mongodb:
+    user: fiap-iburguer
+    password: 1234
+    cluster: iburguer-dev-clust.icg8emx.mongodb.net/
+    appName: iburguer-dev-cluster
+    database: iburguer-payments
+  orderApiUrl: http://iburguer-ordering:8082
