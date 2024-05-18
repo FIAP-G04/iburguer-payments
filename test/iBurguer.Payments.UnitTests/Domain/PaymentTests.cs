@@ -1,3 +1,5 @@
+using AutoFixture;
+using AutoFixture.Xunit2;
 using FluentAssertions;
 using iBurguer.Payments.Core;
 using iBurguer.Payments.Core.Domain;
@@ -5,35 +7,28 @@ using static iBurguer.Payments.Core.Exceptions;
 
 namespace iBurguer.Payments.UnitTests.Domain;
 
-public class PaymentTests
+public class PaymentTests : Util.BaseTests
 {
-    private const string QrCode = "sample-qr-data";
-
-    [Fact]
-    public void ShouldInitializePaymentWithPendingStatus()
+    [Theory, AutoData]
+    public void ShouldInitializePaymentWithPendingStatus(Guid orderId, Amount amount, string qrCode)
     {
-        // Arrange
-        var orderId = Guid.NewGuid();
-        var amount = new Amount(100);
-
         // Act
-        var payment = new Payment(orderId, amount, QrCode);
+        var payment = new Payment(orderId, amount, qrCode);
 
         // Assert
         payment.Status.Should().Be(PaymentStatus.Pending);
+        payment.Amount.Value.Should().Be(amount.Value);
         payment.CreatedAt.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
         payment.PayedAt.Should().BeNull();
         payment.RefusedAt.Should().BeNull();
-        payment.QrData.Should().Be(QrCode);
+        payment.QrData.Should().Be(qrCode);
     }
 
-    [Fact]
-    public void ShouldUpdateStatusToProcessed()
+    [Theory, AutoData]
+    public void ShouldUpdateStatusToProcessed(Guid orderId, Amount amount, string qrCode)
     {
         // Arrange
-        var orderId = Guid.NewGuid();
-        var amount = new Amount(100);
-        var payment = new Payment(orderId, amount, QrCode);
+        var payment = new Payment(orderId, amount, qrCode);
 
         // Act
         payment.Confirm();
@@ -41,16 +36,14 @@ public class PaymentTests
         // Assert
         payment.Status.Should().Be(PaymentStatus.Processed);
         payment.PayedAt.Should().NotBeNull();
-        payment.PayedAt.Value.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
+        payment.PayedAt!.Value.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
     }
 
-    [Fact]
-    public void Refuse_ShouldUpdateStatusToRefused()
+    [Theory, AutoData]
+    public void ShouldUpdateStatusToRefused(Guid orderId, Amount amount, string qrCode)
     {
         // Arrange
-        var orderId = Guid.NewGuid();
-        var amount = new Amount(100);
-        var payment = new Payment(orderId, amount, QrCode);
+        var payment = new Payment(orderId, amount, qrCode);
 
         // Act
         payment.Refuse();
@@ -58,16 +51,15 @@ public class PaymentTests
         // Assert
         payment.Status.Should().Be(PaymentStatus.Refused);
         payment.RefusedAt.Should().NotBeNull();
-        payment.RefusedAt.Value.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
+        payment.RefusedAt!.Value.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
     }
 
-    [Fact]
-    public void Confirm_ShouldThrowExceptionIfAlreadyProcessed()
+    [Theory, AutoData]
+    public void ShouldThrowExceptionWhenTryingToConfirmAnAlreadyProcessedPayment(Guid orderId, Amount amount, string qrCode)
     {
         // Arrange
-        var orderId = Guid.NewGuid();
-        var amount = new Amount(100);
-        var payment = new Payment(orderId, amount, QrCode);
+        var payment = new Payment(orderId, amount, qrCode);
+        
         payment.Confirm();
 
         // Act
@@ -77,13 +69,12 @@ public class PaymentTests
         act.Should().Throw<CannotToConfirmPaymentException>();
     }
 
-    [Fact]
-    public void Refuse_ShouldThrowExceptionIfAlreadyProcessed()
+    [Theory, AutoData]
+    public void ShouldThrowExceptionWhenTryingToRefuseAnAlreadyProcessedPayment(Guid orderId, Amount amount, string qrCode)
     {
         // Arrange
-        var orderId = Guid.NewGuid();
-        var amount = new Amount(100);
-        var payment = new Payment(orderId, amount, QrCode);
+        var payment = new Payment(orderId, amount, qrCode);
+        
         payment.Refuse();
 
         // Act
@@ -93,13 +84,12 @@ public class PaymentTests
         act.Should().Throw<CannotToRefusePaymentException>();
     }
 
-    [Fact]
-    public void Confirmed_ShouldReturnTrueWhenProcessedAndPayedAtIsNotNull()
+    [Theory, AutoData]
+    public void ShouldReturnTrueWhenProcessedAndPayedAtIsNotNull(Guid orderId, Amount amount, string qrCode)
     {
         // Arrange
-        var orderId = Guid.NewGuid();
-        var amount = new Amount(100);
-        var payment = new Payment(orderId, amount, QrCode);
+        var payment = new Payment(orderId, amount, qrCode);
+        
         payment.Confirm();
 
         // Act
@@ -109,18 +99,43 @@ public class PaymentTests
         result.Should().BeTrue();
     }
 
-    [Fact]
-    public void Confirmed_ShouldReturnFalseWhenNotProcessed()
+    [Theory, AutoData]
+    public void ShouldReturnFalseWhenNotProcessed(Guid orderId, Amount amount, string qrCode)
     {
         // Arrange
-        var orderId = Guid.NewGuid();
-        var amount = new Amount(100);
-        var payment = new Payment(orderId, amount, QrCode);
+        var payment = new Payment(orderId, amount, qrCode);
+        
+        // Act & Assert
+        payment.Confirmed.Should().BeFalse();
+    }
+    
+    [Theory, AutoData]
+    public void ShouldThrowPaymentConfirmedDomainEventWhenConfirmingAPayment(Guid orderId, Amount amount, string qrCode)
+    {
+        // Arrange
+        var payment = new Payment(orderId, amount, qrCode);
+        
+        payment.Confirm();
+        
+        // Act & Assert
+        payment.Events.Any().Should().BeTrue();
 
-        // Act
-        var result = payment.Confirmed;
+        var @event = payment.Events.First() as PaymentConfirmed;
+        @event!.OrderId.Should().Be(orderId);
+    }
+    
+    [Theory, AutoData]
+    public void ShouldThrowPaymentRefusedDomainEventWhenRefusingAPayment(Guid orderId, Amount amount, string qrCode)
+    {
+        // Arrange
+        var payment = new Payment(orderId, amount, qrCode);
+        
+        payment.Refuse();
+        
+        // Act & Assert
+        payment.Events.Any().Should().BeTrue();
 
-        // Assert
-        result.Should().BeFalse();
+        var @event = payment.Events.First() as PaymentRefused;
+        @event!.OrderId.Should().Be(orderId);
     }
 }
