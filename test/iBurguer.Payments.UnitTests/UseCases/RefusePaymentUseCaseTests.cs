@@ -4,25 +4,26 @@ using static iBurguer.Payments.Core.Exceptions;
 using iBurguer.Payments.Core.Domain;
 using iBurguer.Payments.Core.Gateways;
 using iBurguer.Payments.Core.UseCases.ConfirmPayment;
+using iBurguer.Payments.Core.UseCases.RefusePaymentUseCase;
 using iBurguer.Payments.UnitTests.Util;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
 
 namespace iBurguer.Payments.UnitTests.UseCases;
 
-public class ConfirmPaymentUseCaseTests : BaseTests
+public class RefusePaymentUseCaseTests : BaseTests
 {
     private readonly IPaymentRepository _repository;
-    private readonly IConfirmPaymentUseCase _sut;
+    private readonly IRefusePaymentUseCase _sut;
 
-    public ConfirmPaymentUseCaseTests()
+    public RefusePaymentUseCaseTests()
     {
         _repository = Substitute.For<IPaymentRepository>();
-        _sut = new ConfirmPaymentUseCase(_repository);
+        _sut = new RefusePaymentUseCase(_repository);
     }
 
     [Theory, AutoData]
-    public async Task ShouldConfirmPaymentWithValidPaymentId(Guid orderId, Amount amount, string qrCode)
+    public async Task ShouldRefusePaymentWithValidPaymentId(Guid orderId, Amount amount, string qrCode)
     {
         // Arrange
         var payment = new Payment(orderId, amount, qrCode);
@@ -31,32 +32,32 @@ public class ConfirmPaymentUseCaseTests : BaseTests
         _repository.Update(payment, Arg.Any<CancellationToken>()).Returns(true);
 
         // Act
-        var result = await _sut.ConfirmPayment(payment.Id, CancellationToken.None);
+        var result = await _sut.RefusePayment(payment.Id, CancellationToken.None);
 
         // Assert
         result.Should().NotBeNull();
         result.OrderId.Should().Be(payment.OrderId);
         result.PaymentId.Should().Be(payment.Id);
-        result.PaymentStatus.Should().Be(PaymentStatus.Processed.Name);
-        result.PayedAt.Should().Be(payment.PayedAt!.Value);
+        result.PaymentStatus.Should().Be(PaymentStatus.Refused.Name);
+        result.RefusedAt.Should().Be(payment.RefusedAt!.Value);
     }
 
     [Theory, AutoData]
-    public async Task ShouldThrowsPaymentNotFoundExceptionWhenConfirmingAPaymentWithNonExistingPaymentId(
+    public async Task ShouldThrowsPaymentNotFoundExceptionWhenRefusingAPaymentWithNonExistingPaymentId(
         Guid invalidPaymentId)
     {
         // Arrange
         _repository.GetById(invalidPaymentId, Arg.Any<CancellationToken>()).ReturnsNull();
 
         // Act
-        Func<Task> act = async () => await _sut.ConfirmPayment(invalidPaymentId, CancellationToken.None);
+        Func<Task> act = async () => await _sut.RefusePayment(invalidPaymentId, CancellationToken.None);
 
         // Assert
         await act.Should().ThrowAsync<PaymentNotFoundException>();
     }
 
     [Theory, AutoData]
-    public async Task ShouldThrowsErrorInPaymentProcessingExceptionWhenConfirmPaymentAndUpdateFails(
+    public async Task ShouldThrowsErrorInPaymentProcessingExceptionWhenRefusePaymentAndUpdateFails(
         Guid orderId, Amount amount, string qrCode)
     {
         // Arrange
@@ -66,7 +67,7 @@ public class ConfirmPaymentUseCaseTests : BaseTests
         _repository.Update(payment, Arg.Any<CancellationToken>()).Returns(false);
 
         // Act
-        Func<Task> act = async () => await _sut.ConfirmPayment(payment.Id, CancellationToken.None);
+        Func<Task> act = async () => await _sut.RefusePayment(payment.Id, CancellationToken.None);
 
         // Assert
         await act.Should().ThrowAsync<ErrorInPaymentProcessingException>();

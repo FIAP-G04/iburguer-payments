@@ -12,15 +12,12 @@ public interface IConfirmPaymentUseCase
 public class ConfirmPaymentUseCase : IConfirmPaymentUseCase
 {
     private readonly IPaymentRepository _repository;
-    private readonly IOrderGateway _gateway;
 
-    public ConfirmPaymentUseCase(IPaymentRepository repository, IOrderGateway gateway)
+    public ConfirmPaymentUseCase(IPaymentRepository repository)
     {
         ArgumentNullException.ThrowIfNull(repository);
-        ArgumentNullException.ThrowIfNull(gateway);
 
         _repository = repository;
-        _gateway = gateway;
     }
 
     public async Task<PaymentConfirmedResponse> ConfirmPayment(Guid paymentId, CancellationToken cancellationToken)

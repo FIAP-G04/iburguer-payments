@@ -12,7 +12,7 @@ public class GenerateQrCodeRequest
         public Validator()
         {
             RuleFor(r => r.OrderId).NotEmpty();
-            RuleFor(r => r.Amount).NotEmpty().GreaterThan((ushort)0);
+            RuleFor(r => r.Amount).NotEmpty().GreaterThan(0);
         }
     }
 }
