@@ -9,7 +9,7 @@ public sealed record Amount
 
     public Amount(decimal amount)
     {
-        InvalidAmount.ThrowIf(amount < 0);
+        InvalidAmountException.ThrowIf(amount < 0);
 
         Value = amount;
     }

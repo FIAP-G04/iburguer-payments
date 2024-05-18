@@ -27,7 +27,7 @@ public class Payment : Entity<Guid>, IAggregateRoot
 
     public void Confirm()
     {
-        CannotToConfirmPayment.ThrowIf(Status != PaymentStatus.Pending);
+        CannotToConfirmPaymentException.ThrowIf(Status != PaymentStatus.Pending);
 
         PayedAt = DateTime.Now;
         Status = PaymentStatus.Processed;
@@ -37,7 +37,7 @@ public class Payment : Entity<Guid>, IAggregateRoot
 
     public void Refuse()
     {
-        CannotToRefusePayment.ThrowIf(Status != PaymentStatus.Pending);
+        CannotToRefusePaymentException.ThrowIf(Status != PaymentStatus.Pending);
 
         RefusedAt = DateTime.Now;
         Status = PaymentStatus.Refused;

@@ -38,10 +38,10 @@ public sealed class CustomExceptionHandler(ILogger<CustomExceptionHandler> logge
 
     private int GetStatusCodeFromException(Exception exception) => exception switch
     {
-        CannotToConfirmPayment => StatusCodes.Status422UnprocessableEntity,
-        CannotToRefusePayment => StatusCodes.Status422UnprocessableEntity,
-        InvalidAmount => StatusCodes.Status422UnprocessableEntity,
-        PaymentNotFound => StatusCodes.Status404NotFound,
+        CannotToConfirmPaymentException => StatusCodes.Status422UnprocessableEntity,
+        CannotToRefusePaymentException => StatusCodes.Status422UnprocessableEntity,
+        InvalidAmountException => StatusCodes.Status422UnprocessableEntity,
+        PaymentNotFoundException => StatusCodes.Status404NotFound,
 
         _ => StatusCodes.Status500InternalServerError
     };
