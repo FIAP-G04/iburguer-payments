@@ -1,7 +1,7 @@
 using FluentAssertions;
 using iBurguer.Payments.Core.Domain;
 
-namespace iBurguer.Payments.UnitTests.Domain;
+namespace iBurguer.Payments.UnitTests.Core.Domain;
 
 public class PaymentStatusTests
 {

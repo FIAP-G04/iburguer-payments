@@ -1,15 +1,12 @@
-using System.Runtime.InteropServices.JavaScript;
 using AutoFixture.Xunit2;
 using FluentAssertions;
-using static iBurguer.Payments.Core.Exceptions;
 using iBurguer.Payments.Core.Domain;
 using iBurguer.Payments.Core.Gateways;
 using iBurguer.Payments.Core.UseCases.GenerateQrCode;
 using iBurguer.Payments.UnitTests.Util;
 using NSubstitute;
-using NSubstitute.ReturnsExtensions;
 
-namespace iBurguer.Payments.UnitTests.UseCases;
+namespace iBurguer.Payments.UnitTests.Core.UseCases;
 
 public class GenerateQrCodeUseCaseTests : BaseTests
 {

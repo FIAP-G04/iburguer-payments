@@ -1,8 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using iBurguer.Payments.Core.Domain;
 using MongoDB.Bson.Serialization;
 
 namespace iBurguer.Payments.Infrastructure.MongoDb.Serializers;
 
+[ExcludeFromCodeCoverage]
 public class AmountSerializer : IBsonSerializer<Amount>
 {
     public Type ValueType => typeof(Amount);

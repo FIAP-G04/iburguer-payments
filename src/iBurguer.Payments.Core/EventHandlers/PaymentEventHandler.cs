@@ -23,6 +23,6 @@ public class PaymentEventHandler : IEventHandler<PaymentConfirmed>,
     
     public async Task Handle(PaymentRefused evt, CancellationToken cancellation)
     {
-        await _gateway.ConfirmOrder(evt.OrderId, cancellation);
+        await _gateway.CancelOrder(evt.OrderId, cancellation);
     }
 }

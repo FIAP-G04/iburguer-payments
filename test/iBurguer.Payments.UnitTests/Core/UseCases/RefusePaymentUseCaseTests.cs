@@ -1,15 +1,13 @@
 using AutoFixture.Xunit2;
 using FluentAssertions;
-using static iBurguer.Payments.Core.Exceptions;
 using iBurguer.Payments.Core.Domain;
-using iBurguer.Payments.Core.Gateways;
-using iBurguer.Payments.Core.UseCases.ConfirmPayment;
 using iBurguer.Payments.Core.UseCases.RefusePaymentUseCase;
 using iBurguer.Payments.UnitTests.Util;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
+using static iBurguer.Payments.Core.Exceptions;
 
-namespace iBurguer.Payments.UnitTests.UseCases;
+namespace iBurguer.Payments.UnitTests.Core.UseCases;
 
 public class RefusePaymentUseCaseTests : BaseTests
 {

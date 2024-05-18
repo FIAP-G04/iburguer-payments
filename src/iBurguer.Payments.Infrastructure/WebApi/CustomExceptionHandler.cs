@@ -42,6 +42,7 @@ public sealed class CustomExceptionHandler(ILogger<CustomExceptionHandler> logge
         CannotToRefusePaymentException => StatusCodes.Status422UnprocessableEntity,
         InvalidAmountException => StatusCodes.Status422UnprocessableEntity,
         PaymentNotFoundException => StatusCodes.Status404NotFound,
+        ErrorInPaymentProcessingException => StatusCodes.Status500InternalServerError,
 
         _ => StatusCodes.Status500InternalServerError
     };

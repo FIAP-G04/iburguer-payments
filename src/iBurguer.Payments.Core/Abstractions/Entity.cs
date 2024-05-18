@@ -13,11 +13,6 @@ public abstract class Entity<TId> : IEntity
 
     protected void RaiseEvent(IDomainEvent domainEvent)
     {
-        if (events is null)
-        {
-            events = new List<IDomainEvent>();
-        }
-        
         events.Add(domainEvent);
     }
 

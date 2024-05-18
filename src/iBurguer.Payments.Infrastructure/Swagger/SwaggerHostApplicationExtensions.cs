@@ -24,7 +24,6 @@ public static class SwaggerHostApplicationExtensions
                 Version = Version
             });
             
-            //options.ExampleFilters();
             options.EnableAnnotations();
             options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "iBurguer.Payments.API.xml"));
             options.DescribeAllParametersInCamelCase();

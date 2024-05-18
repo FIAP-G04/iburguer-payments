@@ -1,11 +1,9 @@
-using AutoFixture;
 using AutoFixture.Xunit2;
 using FluentAssertions;
-using iBurguer.Payments.Core;
 using iBurguer.Payments.Core.Domain;
 using static iBurguer.Payments.Core.Exceptions;
 
-namespace iBurguer.Payments.UnitTests.Domain;
+namespace iBurguer.Payments.UnitTests.Core.Domain;
 
 public class PaymentTests : Util.BaseTests
 {
