@@ -3,9 +3,9 @@
 # Declare variables to be passed into your templates.
 
 image:
-  repository: matheusaoc/iburguer-payments #cdvt/iburguer-ordering
-  pullPolicy: Always
-  tag: "latest"
+  repository: cdvt/iburguer-payments
+  pullPolicy: IfNotPresent
+  tag: "0.0.1"
 
 nameOverride: ""
 fullnameOverride: ""
