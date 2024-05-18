@@ -55,7 +55,7 @@ jobs:
     #needs: build
 
     env:
-      IMAGE_NAME: iburguer-ordering
+      IMAGE_NAME: iburguer-payments
       ROOT_PROJECT_DIRECTORY: src
       PROJECT_NAME: iBurguer.Payments.API
       AWS_EKS_CLUSTER_NAME: iburguer-iburguer-cluster
