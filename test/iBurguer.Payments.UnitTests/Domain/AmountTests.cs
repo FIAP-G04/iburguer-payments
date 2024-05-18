@@ -1,3 +1,4 @@
+using FluentAssertions;
 using static iBurguer.Payments.Core.Exceptions;
 using iBurguer.Payments.Core.Domain;
 
@@ -9,13 +10,13 @@ public class AmountTests
     [InlineData(0)]
     [InlineData(100)]
     [InlineData(1000)]
-    public void ShouldReturnValidValue(decimal amount)
+    public void ShouldReturnValidValue(decimal value)
     {
         // Arrange & Act
-        var value = new Amount(amount);
+        var amount = new Amount(value);
 
         // Assert
-        Assert.Equal(amount, value.Value);
+        amount.Value.Should().Be(value);
     }
 
     [Fact]
@@ -35,38 +36,38 @@ public class AmountTests
         var result = amount.ToString();
 
         // Assert
-        Assert.Equal("50", result);
+        result.Should().Be("50");
     }
 
     [Theory]
     [InlineData(0)]
     [InlineData(100)]
     [InlineData(1000)]
-    public void ShouldPerformImplicitConversionFromDecimalToAmountCorrectly(decimal amount)
+    public void ShouldPerformImplicitConversionFromDecimalToAmountCorrectly(decimal value)
     {
         // Arrange
-        Amount amountObj = new Amount(amount);
+        Amount amount = new Amount(value);
 
         // Act
-        decimal result = amountObj;
+        decimal result = amount;
 
         // Assert
-        Assert.Equal(amount, result);
+        result.Should().Be(value);
     }
 
     [Theory]
     [InlineData(0)]
     [InlineData(100)]
     [InlineData(1000)]
-    public void ShouldPerformImplicitConversionFromAmountToDecimalCorrectly(decimal amount)
+    public void ShouldPerformImplicitConversionFromAmountToDecimalCorrectly(decimal value)
     {
         // Arrange
-        Amount amountObj = amount;
+        Amount amount = value;
 
         // Act
-        decimal result = amountObj.Value;
+        decimal result = amount.Value;
 
         // Assert
-        Assert.Equal(amount, result);
+        result.Should().Be(value);
     }
 }
