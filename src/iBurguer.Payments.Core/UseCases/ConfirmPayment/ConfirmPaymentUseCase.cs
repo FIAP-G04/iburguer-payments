@@ -27,13 +27,13 @@ public class ConfirmPaymentUseCase : IConfirmPaymentUseCase
     {
         var payment = await _repository.GetById(paymentId, cancellationToken);
 
-        PaymentNotFound.ThrowIfNull(payment);
+        PaymentNotFoundException.ThrowIfNull(payment);
 
         payment!.Confirm();
 
         var processed = await _repository.Update(payment, cancellationToken);
         
-        ErrorInPaymentProcessing.ThrowIf(!processed);
+        ErrorInPaymentProcessingException.ThrowIf(!processed);
 
         return PaymentConfirmedResponse.Convert(payment);
     }

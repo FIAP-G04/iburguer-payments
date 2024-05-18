@@ -20,4 +20,10 @@
         <Using Include="Xunit"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\iBurguer.Payments.API\iBurguer.Payments.API.csproj" />
+      <ProjectReference Include="..\..\src\iBurguer.Payments.Core\iBurguer.Payments.Core.csproj" />
+      <ProjectReference Include="..\..\src\iBurguer.Payments.Infrastructure\iBurguer.Payments.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>

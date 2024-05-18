@@ -23,13 +23,13 @@ public class RefusePaymentUseCase : IRefusePaymentUseCase
     {
         var payment = await _repository.GetById(paymentId, cancellationToken);
 
-        PaymentNotFound.ThrowIfNull(payment);
+        PaymentNotFoundException.ThrowIfNull(payment);
 
         payment!.Refuse();
 
         var refused = await _repository.Update(payment, cancellationToken);
         
-        ErrorInPaymentProcessing.ThrowIf(!refused);
+        ErrorInPaymentProcessingException.ThrowIf(!refused);
 
         return PaymentRefusedResponse.Convert(payment);
     }
