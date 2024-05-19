@@ -23,7 +23,7 @@ public class DbContext : IDbContext
 
     public Task<IClientSessionHandle> CreateSession() => Client.StartSessionAsync();
 
-    public void BeginTrasaction(IClientSessionHandle session) => session.StartTransaction();
+    public void BeginTransaction(IClientSessionHandle session) => session.StartTransaction();
     
     public Task Commit(IClientSessionHandle session) => session.CommitTransactionAsync();
     

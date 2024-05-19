@@ -32,7 +32,7 @@ public class PaymentRepository : IPaymentRepository
         
         using (var session = await _context.CreateSession())
         {
-            _context.BeginTrasaction(session);
+            _context.BeginTransaction(session);
 
             try
             {
