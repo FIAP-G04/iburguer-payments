@@ -7,17 +7,14 @@ public class OrderApiClient : IOrderGateway
 {
     private readonly HttpClient _httpClient;
     private readonly string _baseUrl;
-    private readonly ILogger<OrderApiClient> _logger;
 
-    public OrderApiClient(OrderApiConfiguration configuration, IHttpClientFactory httpClientFactory, ILogger<OrderApiClient> logger)
+    public OrderApiClient(OrderApiConfiguration configuration, IHttpClientFactory httpClientFactory)
     {
         ArgumentNullException.ThrowIfNull(configuration);
         ArgumentNullException.ThrowIfNull(httpClientFactory);
-        ArgumentNullException.ThrowIfNull(logger);
         
         _baseUrl = configuration.Url;
         _httpClient = httpClientFactory.CreateClient();
-        _logger = logger;
     }
     
     public async Task<bool> ConfirmOrder(Guid orderId, CancellationToken cancellationToken = default)
@@ -34,9 +31,7 @@ public class OrderApiClient : IOrderGateway
         }
         catch (Exception ex)
         {
-            _logger.LogError("An error occurred while trying to confirm an order.", ex);
-
-            throw;
+            throw new InvalidOperationException("An error occurred while trying to confirm an order.", ex);
         }
     }
 
@@ -54,9 +49,7 @@ public class OrderApiClient : IOrderGateway
         }
         catch (Exception ex)
         {
-            _logger.LogError("An error occurred while trying to cancel an order.", ex);
-
-            throw;
+            throw new InvalidOperationException("An error occurred while trying to cancel an order.", ex);
         }
     }
 }
