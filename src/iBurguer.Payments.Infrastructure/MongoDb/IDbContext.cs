@@ -10,7 +10,7 @@ public interface IDbContext
 
     Task<IClientSessionHandle> CreateSession();
     
-    void BeginTrasaction(IClientSessionHandle session);
+    void BeginTransaction(IClientSessionHandle session);
     
     Task Commit(IClientSessionHandle session);
     
