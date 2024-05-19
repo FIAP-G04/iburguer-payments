@@ -1,8 +1,8 @@
 using FluentAssertions;
-using static iBurguer.Payments.Core.Exceptions;
 using iBurguer.Payments.Core.Domain;
+using static iBurguer.Payments.Core.Exceptions;
 
-namespace iBurguer.Payments.UnitTests.Domain;
+namespace iBurguer.Payments.UnitTests.Core.Domain;
 
 public class AmountTests
 {
