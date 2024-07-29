@@ -108,7 +108,7 @@ jobs:
             helm version
             kubectl version
             kubectl cluster-info
-            helm template iburguer --set configmap.mongodb.password=${{ secrets.DATABASE_PASSWORD }} --set configmap.mongodb.cluster=${{ secrets.ATLAS_MONGO_CLUSTER }} --set image.tag=${{ steps.version.outputs.version }} ./chart > k8s/artifacts.yaml
+            helm template iburguer --set configmap.mongodb.password=${{ secrets.DATABASE_PASSWORD }} --set configmap.mongodb.cluster=${{ secrets.ATLAS_MONGO_CLUSTER }} --set image.tag=${{ steps.version.outputs.version }} --set configmap.massTransit.accessKey=${{ secrets.AWS_ACCESS_KEY_ID }} --set configmap.massTransit.secretKey=${{ secrets.AWS_SECRET_ACCESS_KEY }} ./chart > k8s/artifacts.yaml
 
       - name: Deploy to EKS
         run: |
