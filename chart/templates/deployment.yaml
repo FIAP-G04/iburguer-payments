@@ -38,6 +38,21 @@ spec:
                 configMapKeyRef:
                   name: {{ include "FIAP.Diner.fullname" . }}
                   key: OrderApi__Url
+            - name: MassTransit__Region
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "FIAP.Diner.fullname" . }}
+                  key: MassTransit__Region
+            - name: MassTransit__AccessKey
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "FIAP.Diner.fullname" . }}
+                  key: MassTransit__AccessKey
+            - name: MassTransit__SecretKey
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "FIAP.Diner.fullname" . }}
+                  key: MassTransit__SecretKey
           ports:
             - containerPort: {{ .Values.service.targetPort }}
           livenessProbe:

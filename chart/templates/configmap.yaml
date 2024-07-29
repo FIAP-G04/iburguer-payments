@@ -9,3 +9,6 @@ data:
   MongoDb__ConnectionString: mongodb+srv://{{ .Values.configmap.mongodb.user }}:{{ .Values.configmap.mongodb.password }}@{{ .Values.configmap.mongodb.cluster }}?retryWrites=true&w=majority&appName={{ .Values.configmap.mongodb.appName }}
   MongoDb__Database: {{ .Values.configmap.mongodb.database }}
   OrderApi__Url: {{ .Values.configmap.orderApiUrl }}
+  MassTransit__Region: {{ .Values.configmap.massTransit.region }}
+  MassTransit__AccessKey: {{ .Values.configmap.massTransit.accessKey }}
+  MassTransit__SecretKey: {{ .Values.configmap.massTransit.secretKey }}

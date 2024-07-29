@@ -47,7 +47,7 @@ public class PaymentRepository : IPaymentRepository
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 await _context.Rollback(session);
                 

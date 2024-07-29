@@ -58,3 +58,7 @@ configmap:
     appName: iburguer-dev-cluster
     database: iburguer-payments
   orderApiUrl: http://iburguer-ordering:8082
+  massTransit:
+    region: "us-east-1"
+    accessKey: "accessKey"
+    secretKey: "secret"
