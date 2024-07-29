@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddRestClient()
        .AddWebApi()
        .AddMongoDb()
-       .AddEventHandlers()
+       .AddEventHandlers(builder.Configuration)
        .AddRepositories()
        .AddUseCases()
        .AddSerilog();

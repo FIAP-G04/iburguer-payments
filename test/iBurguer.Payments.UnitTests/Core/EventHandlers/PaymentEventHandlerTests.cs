@@ -1,4 +1,5 @@
 using AutoFixture.Xunit2;
+using iBurguer.Payments.Core.Abstractions;
 using iBurguer.Payments.Core.Domain;
 using iBurguer.Payments.Core.EventHandlers;
 using iBurguer.Payments.Core.Gateways;
@@ -9,12 +10,14 @@ namespace iBurguer.Payments.UnitTests.Core.EventHandlers;
 public class PaymentEventHandlerTests
 {
     private readonly IOrderGateway _gateway;
+    private readonly ISQSService _sqsService;
     private readonly PaymentEventHandler _sut;
 
     public PaymentEventHandlerTests()
     {
         _gateway = Substitute.For<IOrderGateway>();
-        _sut = new PaymentEventHandler(_gateway);
+        _sqsService = Substitute.For<ISQSService>();
+        _sut = new PaymentEventHandler(_gateway, _sqsService);
     }
 
     [Theory, AutoData]
