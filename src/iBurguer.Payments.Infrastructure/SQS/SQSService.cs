@@ -5,9 +5,11 @@ using Amazon.SQS.Model;
 using iBurguer.Payments.Core.Abstractions;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using System.Diagnostics.CodeAnalysis;
 
 namespace iBurguer.Payments.Infrastructure.SQS
 {
+    [ExcludeFromCodeCoverage]
     public class SQSService : ISQSService
     {
         private readonly IAmazonSQS _client;
