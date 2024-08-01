@@ -1,5 +1,6 @@
 using iBurguer.Payments.Core.UseCases.ConfirmPayment;
 using iBurguer.Payments.Core.UseCases.GenerateQrCode;
+using iBurguer.Payments.Core.UseCases.GetPaymentUseCase;
 using iBurguer.Payments.Core.UseCases.RefusePaymentUseCase;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,26 @@ namespace iBurguer.Payments.API.Controllers;
 [ApiController]
 public class PaymentController : ControllerBase
 {
+    /// <summary>
+    /// Gets the payment of an order
+    /// </summary>
+    /// <remarks>Returns the payment generated for the order.</remarks>
+    /// <param name="useCase">The use case responsible for retrieving the payment.</param>
+    /// <param name="orderId">Id of the order that generated the payment.</param>
+    /// <param name="cancellationToken">Cancellation token (optional).</param>
+    /// <response code="200">Payment returned successfully.</response>
+    /// <response code="422">Invalid request. Missing or invalid parameters.</response>
+    /// <response code="500">Internal server error. Something went wrong on the server side.</response>
+    /// <returns>Returns an HTTP response indicating the success of the operation along with the registered payment.</returns>
+    [HttpGet]
+    [ProducesResponseType(typeof(GenerateQrCodeResponse), 200)]
+    public async Task<IActionResult> GetOrderPayment([FromServices] IGetPaymentUseCase useCase, [FromQuery] Guid orderId, CancellationToken cancellationToken = default)
+    {
+        var response = await useCase.GetPayment(orderId, cancellationToken);
+
+        return Ok(response);
+    }
+
     /// <summary>
     /// Register a new payment
     /// </summary>

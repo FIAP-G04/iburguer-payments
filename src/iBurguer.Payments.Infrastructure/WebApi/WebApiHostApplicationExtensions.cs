@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using iBurguer.Payments.Infrastructure.SQS.Worker;
 using iBurguer.Payments.Infrastructure.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,8 @@ public static class WebApiHostApplicationExtensions
         builder.Services.AddProblemDetails();
         builder.AddSwagger();
         builder.Services.AddHealthChecks();
+
+        builder.Services.AddHostedService<OrderRegisteredWorker>();
 
         builder.Services.AddCors(options =>
         {

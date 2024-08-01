@@ -44,7 +44,7 @@ namespace iBurguer.Payments.Infrastructure.SQS
             return new AmazonSQSClient(credentials, region);
         }
 
-        private async Task<string> GetQueueUrl(string queueName)
+        public async Task<string> GetQueueUrl(string queueName)
         {
             var response = await _client.GetQueueUrlAsync(new GetQueueUrlRequest
             {
@@ -52,6 +52,30 @@ namespace iBurguer.Payments.Infrastructure.SQS
             });
 
             return response.QueueUrl;
+        }
+
+        public async Task<List<Message>> ReceiveMessageAsync(string queueUrl)
+        {
+            var request = new ReceiveMessageRequest
+            {
+                QueueUrl = queueUrl,
+                MaxNumberOfMessages = 10
+            };
+
+            var messages = await _client.ReceiveMessageAsync(request);
+
+            return messages.Messages;
+        }
+
+        public async Task DeleteMessageAsync(string queueUrl, string id)
+        {
+            var request = new DeleteMessageRequest
+            {
+                QueueUrl = queueUrl,
+                ReceiptHandle = id
+            };
+
+            await _client.DeleteMessageAsync(request);
         }
     }
 }
