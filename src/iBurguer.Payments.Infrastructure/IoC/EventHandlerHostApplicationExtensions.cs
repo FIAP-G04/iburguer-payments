@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Amazon.SQS.Model;
 using iBurguer.Payments.Core.Abstractions;
 using iBurguer.Payments.Core.Domain;
 using iBurguer.Payments.Core.EventHandlers;
