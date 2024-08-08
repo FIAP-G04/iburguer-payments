@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace iBurguer.Payments.Infrastructure.Http;
+namespace iBurguer.Payments.Infrastructure.Http.Order;
 
 [ExcludeFromCodeCoverage]
 public record OrderApiConfiguration
@@ -41,7 +41,7 @@ public record OrderApiConfiguration
         {
             throw new InvalidOperationException("Url is misconfigured.");
         }
-        
+
         if (MaxRetryAttempts <= 0)
         {
             throw new InvalidOperationException("MaxRetryAttempts must be greater than zero.");

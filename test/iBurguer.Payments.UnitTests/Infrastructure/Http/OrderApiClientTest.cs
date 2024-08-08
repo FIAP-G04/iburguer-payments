@@ -2,7 +2,6 @@ using System.Net;
 using System.Text;
 using AutoFixture.Xunit2;
 using FluentAssertions;
-using iBurguer.Payments.Infrastructure.Http;
 using iBurguer.Payments.Infrastructure.Http.Order;
 using iBurguer.Payments.UnitTests.Util;
 using Moq;

@@ -24,6 +24,7 @@ public class PaymentRepositoryTests : BaseTests
         _mockContext = Substitute.For<IDbContext>();
         _mockDispatcher = Substitute.For<IEventDispatcher>();
 
+        _mockContext.Database.GetCollection<Payment>("payments").Returns(_mockCollection);
         _sut = new PaymentRepository(_mockContext, _mockDispatcher);
     }
 
@@ -32,7 +33,7 @@ public class PaymentRepositoryTests : BaseTests
     {
         // Arrange
         var payment = new Payment(orderId, amount, qrCode);
-        
+
         payment.Confirm();
 
         // Act
@@ -41,5 +42,43 @@ public class PaymentRepositoryTests : BaseTests
         // Assert
         result.Should().BeTrue();
         await _mockDispatcher.Received(1).Dispatch(Arg.Any<IDomainEvent>(), CancellationToken.None);
+    }
+
+    [Theory, AutoData]
+    public async Task ShouldSavePayment(Guid orderId, decimal amount, string qrCode)
+    {
+        // Arrange
+        var payment = new Payment(orderId, amount, qrCode);
+
+        // Act
+        await _sut.Save(payment);
+
+        // Assert
+        await _mockCollection.Received(1).InsertOneAsync(payment, null);
+    }
+
+    [Theory, AutoData]
+    public async Task ShouldRollbackTransactionOnUpdateFailure(Guid orderId, decimal amount, string qrCode)
+    {
+        // Arrange
+        var payment = new Payment(orderId, amount, qrCode);
+        payment.Confirm();
+        var cancellationToken = new CancellationToken();
+
+        var mockSession = Substitute.For<IClientSessionHandle>();
+        _mockContext.CreateSession().Returns(Task.FromResult(mockSession));
+        _mockCollection.When(x => x.UpdateOneAsync(mockSession,
+            Arg.Any<FilterDefinition<Payment>>(),
+            Arg.Any<UpdateDefinition<Payment>>(),
+            null,
+            cancellationToken))
+            .Do(x => { throw new Exception("Update failed"); });
+
+        // Act
+        var result = await _sut.Update(payment, cancellationToken);
+
+        // Assert
+        result.Should().BeFalse();
+        await _mockContext.Received(1).Rollback(mockSession);
     }
 }

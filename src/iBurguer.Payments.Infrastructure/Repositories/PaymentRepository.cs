@@ -60,4 +60,9 @@ public class PaymentRepository : IPaymentRepository
     {
         return await _collection.Find(i => i.Id == paymentId).FirstOrDefaultAsync(cancellationToken);
     }
+
+    public async Task<Payment?> GetByOrderId(Guid orderId, CancellationToken cancellationToken)
+    {
+        return await _collection.Find(x => x.OrderId == orderId).FirstOrDefaultAsync(cancellationToken);
+    }
 }
